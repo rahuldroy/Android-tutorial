@@ -1,16 +1,23 @@
 package com.mycompany.myfirstapp;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.EditText;
 
 public class MyActivity extends ActionBarActivity {
+
+    public static String PACKAGE_NAME;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my);
+
+        PACKAGE_NAME = getApplicationContext().getPackageName();
     }
 
     @Override
@@ -35,4 +42,17 @@ public class MyActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * Called when the user clicks the Send button
+     *
+     * @param view
+     */
+    public void sendMessage(View view) {
+        Intent intent = new Intent(this, DisplayMessageActivity.class);
+        String message = ((EditText) findViewById(R.id.edit_message)).getText().toString();
+
+        intent.putExtra(PACKAGE_NAME.concat(".MESSAGE"), message);
+
+        startActivity(intent);
+    }
 }
